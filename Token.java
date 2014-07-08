@@ -1,8 +1,8 @@
 public class Token {
-	private int state;//kiihhasvdhav
-	private int coordinate;
-	private int id;
-	private int playerId;
+	private int isfree;
+	private int iscomplete;
+	private int position;
+	private int playerid;
 	public Token(int id, int playerId) {
 		coordinate = playerId * 13 - 1;
 		state = GAME_CONFIG.LOCKED;
