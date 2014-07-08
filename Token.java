@@ -1,5 +1,5 @@
 public class Token {
-	private int state;
+	private int state;//kiihhasvdhav
 	private int coordinate;
 	private int id;
 	private int playerId;
