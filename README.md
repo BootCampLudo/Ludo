@@ -2,6 +2,6 @@ Ludo
 ====
 team members:
 
-Vignesh
+Vignesh S
 Sharath Hari N
 Abhishek
