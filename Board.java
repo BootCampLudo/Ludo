@@ -1,58 +1,34 @@
-public class Board {
-	private Player players[];
-	public Board(int numberOfPlayers) {
-		players = new Player[numberOfPlayers];
-		for (int i = 0; i<numberOfPlayers; i++) {
-			Token tokens[] = new Token[4];
-			
-			for (int j = 0; j<4; j++) {
-				tokens[j] = new Token(j+1,i);
-			}
+import java.util.*;
 
-			players[i] = new Player(i,tokens);
-		}
+public class Board {
+	private int[] commonBoard;
+	private int[][] homeBoard;
+
+	public Board() {
+		this.commonBoard = new int[52];
+		for (int i = 0; i < 52; i++)
+			commonBoard[i] = -1;
+		this.homeBoard = new int[4][5];
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 5; j++)
+				homeBoard[i][j] = -1;
+
 	}
-	public Player[] getPlayers() {
-		return players;
+
+	public void setterCommonBoard(int playerid, int index) {
+		this.commonBoard[index] = playerid;
 	}
-	public Player[] playersUnfinished() {
-		int UnfinishedCount = 0; 
-		for (int i=0;i <players.length; i++) {
-			if (players[i].isUnfinished()) {
-				UnfinishedCount++;
-			}
-		}
-		if (UnfinishedCount == 0)
-			return null;
-		Player UnfinishedPlayers[] = new Player[UnfinishedCount];
-		for (int i=0;i <players.length; i++) {
-			if (players[i].isUnfinished()) {
-				UnfinishedPlayers[i] = players[i];
-			}
-		}
-		return UnfinishedPlayers;
+
+	public void setterHomeBoard(int playerid, int index) {
+		this.homeBoard[playerid][index] = playerid;
 	}
-	public boolean isHumanUnfinished() {
-		for (int i=0; i < players.length; i++) {
-			if(players[i].getId() == GAME_CONFIG.HUMAN_ID)
-				return players[i].isUnfinished();
-		}
-		return false;
+
+	public int getterCommonBoard(int index) {
+		return this.commonBoard[index];
 	}
-	public void display() {	
-		for (int i = 0; i < players.length; i++) {
-			if(players[i].isUnfinished()) {
-				System.out.println("Player ID:" +(players[i].getId() + 1));
-				Token playerTokens[] = players[i].getTokens();
-				for (int j = 0; j < playerTokens.length; j++) {
-					int coordinate = playerTokens[j].getCoordinate();
-					int state = playerTokens[j].getState();
-					int tokenId = playerTokens[j].getId();
-					int playerId = playerTokens[j].getPlayerId();
-					System.out.println("ID:" + tokenId + " State:"+ state + " Coordinate:" + (coordinate - playerId*13));
-				}
-				System.out.println("------------------------------------------------");
-			}
-		}
+
+	public int getterHomeBoard(int playerid, int index) {
+		return this.homeBoard[playerid][index];
 	}
+
 }
