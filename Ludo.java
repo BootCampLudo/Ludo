@@ -1,45 +1,40 @@
-import java.util.*;
-
 public class Ludo {
-	Board board;
-	Player[] players;
+	private Board board;
+	private Player[] players;
 
 	public Ludo(int numOfPlayers) {
 		board = new Board();
-		players = new Player[numOfPlayers]();
+		players = new Player[numOfPlayers];
 		
-		player[0] = new Player(0, true)
+		players[0] = new Player(0, true);
 		for (int i = 1; i < numOfPlayers; i++) {
 			players[i] = new Player(i, false);
 		}
 	}
 
 	public void checkHit(int position) {
-		int playerAtPos = getPlayerAtPosCommonBoard(position);
+		int playerAtPos = board.getPlayerAtPosCommonBoard(position);
 		if (playerAtPos != -1) {
 			players[playerAtPos].resetTokenAtPos(position);
 		}
 	}
 
-	public static void main(String[] arg) {
+	public void play(int numOfPlayers) {
 		int turn = 0;
-
-		int numOfPlayers = 4;
-		Ludo ludo = new Ludo(numOfPlayers);
 		int unfinishedPlayers = numOfPlayers;
 		while (players[0].isUnfinished()
 				&& unfinishedPlayers > 1) {
 			turn = turn % numOfPlayers;
 
 			if (players[turn].isUnfinished()) {
-				int pos = player.move();
+				int pos = players[turn].makeValidMove(players[turn].rollDice());
 				if (pos != -1) {
-					if (pos < offset - 1) {
+					if (pos < turn * 13 - 1) {
 						checkHit(pos);
 						board.putPlayerCommonBoard(turn, pos);
 					}
 					else {
-						board.putPlayerHomeBoard(turn, pos - (offset - 1));
+						board.putPlayerHomeBoard(turn, pos - (turn * 13 - 1));
 					}
 				}
 				else {
@@ -56,5 +51,11 @@ public class Ludo {
 		} else {
 			System.out.println("You Win !!");
 		}
+	}
+	
+	public static void main(String[] arg) {
+		int numOfPlayers = 4;
+		Ludo ludo = new Ludo(numOfPlayers);
+		ludo.play(numOfPlayers);
 	}
 }
