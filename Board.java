@@ -23,11 +23,11 @@ public class Board {
 		this.homeBoard[playerid][pos] = playerid;
 	}
 
-	public int PlayerAtPosCommonBoard(int pos) {
+	public int getPlayerAtPosCommonBoard(int pos) {
 		return this.commonBoard[pos];
 	}
 
-	public int PlayerAtPosHomeBoard(int playerid, int pos) {
+	public int getPlayerAtPosHomeBoard(int playerid, int pos) {
 		return this.homeBoard[playerid][pos];
 	}
 
