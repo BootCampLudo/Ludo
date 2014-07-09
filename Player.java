@@ -110,6 +110,16 @@ public class Player {
 		return (!checkClash(steps, id) && tokens[id].isFree());
 	}
 
+	public int numFreeToken() {
+		int numFree = 0;
+		for (int i = 0; i < 4; i++) {
+			if (tokens[i].isFree()) {
+				numFree++;
+			}
+		}
+		return numFree;
+	}
+	
 	public int makeValidMove(int diceNumber) {
 		int id;
 		Random rand = new Random();
@@ -122,9 +132,11 @@ public class Player {
 		} else {
 			id = rand.nextInt(4);
 		}
-		if (diceNumber == 6 && this.isHuman) {
-			System.out.println(" Want to unlock a token? (y/n):  ");
-			choice = scan.next();
+		if (diceNumber == 6 && this.numFreeToken() > 0) {
+			if (this.isHuman) {
+				System.out.println(" Want to unlock a token? (y/n):  ");
+				choice = scan.next();
+			}
 			if(choice.equal("y")){
 				int tokenId = findLockedToken();
 				unlockToken(tokenId);
