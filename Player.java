@@ -55,9 +55,12 @@ public class Player {
 		return null;
 	}
 */
-	public boolean moveTokenByStep(int tokenId, int steps) {
-		Token t = tokens[id];
-		return t.moveToken(steps);
+	public moveTokenByStep(int tokenId, int steps) {
+		if(canMove(steps, tokenId){
+			Token t = tokens[id];
+		
+			t.moveToken(steps);
+		}
 	}
 
 	public int findLockedToken() {
@@ -73,9 +76,30 @@ public class Player {
 		Random rand = new Random();
 		return rand.nextInt(6) + 1;
 	}
-
-	public boolean canMove(int steps) {
-		return tokens[0].canMove(steps) || tokens[1].canMove(steps)
-				|| tokens[2].canMove(steps) || tokens[3].canMove(steps);
+	public int[] allTokenPos(){
+		int[] tokPositions = new int[4];
+		for(int i = 0; i < 4 ;i++){
+			tokPositions[i]= tokens[i].getPosition();
+		}
+		return tokPositions;
+	}
+	public boolean checkClash(int steps, int id){
+		int[] positions = allTokenPos();
+		for(int i = 0; i < 4; i++){
+			if(id == i){
+				continue;
+			}
+			else if((token[id] + steps) == token[i].getPosition)
+					return true;
+			}
+		return false;
+	}
+	public boolean canMove(int steps,int id) {
+		int[] positions = allTokenPos();
+		if((postions[id] + steps) % 60 < startingpos ){
+			return !checkClash(steps, id);
+			
+		}
+		
 	}
 }
