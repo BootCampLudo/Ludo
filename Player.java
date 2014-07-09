@@ -12,9 +12,7 @@ public class Player {
 		this.id = id;
 		this.tokens = new Token[4];
 		for (int i = 0; i < 4; i++) {
-
 			tokens[i] = new Token(id);
-
 		}
 
 		this.unfinished = true;
@@ -51,7 +49,6 @@ public class Player {
 			} else {
 				break;
 			}
-
 		}
 		if (countTokensFinished != 4) {
 			unfinished = false;
@@ -93,19 +90,19 @@ public class Player {
 	}
 
 	public boolean checkClash(int steps, int id) {
-		int[] StepsMovedPlayers = new int[4];
+		int[] stepsMoved = new int[4];
 		for (int i = 0; i < 4; i++) {
-			StepsMovedPlayers[i] = totalSteps(i);
+			stepsMoved[i] = getStepsMoved(i);
 		}
 		for (int j = 0; j < 4; j++) {
-			if ((StepsMovedPlayers[id] + steps) == StepsMovedPlayers[j]) {
+			if ((stepsMoved[id] + steps) == stepsMoved[j]) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public int totalSteps(int id) {
+	public int getStepsMoved(int id) {
 		return ((tokens[id].getPosition() - (id * 13) % 56));
 	}
 
@@ -125,7 +122,7 @@ public class Player {
 		} else {
 			id = rand.nextInt(4);
 		}
-		if (diceNumber == 6 ) {
+		if (diceNumber == 6 && this.isHuman) {
 			System.out.println(" Want to unlock a token? (y/n):  ");
 			choice = scan.next();
 			if(choice.equal("y")){
