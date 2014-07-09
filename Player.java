@@ -71,7 +71,7 @@ public class Player {
 	}
 
 	public int findLockedToken() {
-		for (int i = 0; i < tokens.length; i++) {
+		for (int i = 0; i < 4; i++) {
 			if (!tokens[i].isFree()) {
 				return i;
 			}
@@ -134,14 +134,14 @@ public class Player {
 				return this.id * 13;
 			}
 		}
-		int[] visited = new int[4];
+		int[] visitedToken = new int[4];
 		for (int i = 0; i < 4; i++) {
-			visited[i] = 0;
+			visitedToken[i] = 0;
 		}
 
 		int count = 4;
 		while (count > 0) {
-			if (visited[id] != 1) {
+			if (visitedToken[id] != 1) {
 				if (this.canMove(diceNumber, id)) {
 					this.moveTokenByStep(id, diceNumber);
 					return tokens[id].getPosition();
