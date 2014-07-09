@@ -2,119 +2,23 @@ import java.util.*;
 
 public class Ludo {
 	Board board;
+	Player[] players;
 
-	public Ludo(int numberOfPlayes) {
-		board = new Board(numberOfPlayes);
-	}
-
-	public Board getBoard() {
-		return board;
-	}
-
-	public int rollDice() {
-		Random rand = new Random();
-		return rand.nextInt(6) + 1;
-	}
-
-	public void unlockAToken(Player player) {// remove IO
-		int tokenId = player.findLockedToken();
-		if (tokenId == 0) {
-			System.out.println("All Tokens are unlocked"); 
-		} else {
-			player.unlockToken(tokenId);
-			player.moveTokenByStep(tokenId, 6);
-		}
-
-	}
-
-	public void checkHit(Token[] token, int tokenId) {
-		Player players[] = board.getPlayers();
-		for (int i = 0; i < players.length; i++) {
-			if (token[tokenId].getPlayerId() == players[i].getId())
-				break;
-
-			Token tokens[] = players[i].getTokens();
-			for (int j = 0; j < 4; j++) {
-				if ((tokens[j].getCoordinate() % 60) == (token[tokenId].getCoordinate() % 60)
-						&& tokens[j].getState() != GAME_CONFIG.SAFE) {
-					System.out.println("Token id " + tokens[j].getId() + " of player " + tokens[i].getPlayerId() + " HIT");
-					tokens[j].reset();
-				}
-			}
-		}
-	}
-
-	public boolean makeAValidMoveForHuman(Token[] token, int diceNumber) {//remove io
-		int tokenId;
-		Random rand = new Random();
-		Scanner scan = new Scanner(System.in);
-
-		System.out.println("Enter the tokenId to be moved: (1/2/3/4)");
-		tokenId = scan.nextInt() - 1;
-
-		int[] visited = new int[4];
-		for (int i = 0; i < 4; i++) {
-			visited[i] = 0;
-		}
+	public Ludo(int numOfPlayers) {
+		board = new Board();
+		players = new Player[numOfPlayers]();
 		
-		int count = 4;
-		while (count > 0) {
-			if (visited[tokenId] != 1) {
-				if (token[tokenId].canMove(diceNumber)) {
-					token[tokenId].moveToken(diceNumber);
-					checkHit(token, tokenId);
-					return true;
-				} else {
-					visited[tokenId] = 1;
-
-					tokenId = rand.nextInt(4);
-
-				}
-			} else {
-				count++;
-				System.out.println(" Invalid Move! Try Again ");
-				System.out.println("Enter the tokenId to be moved: (1/2/3/4)          ");
-				tokenId = scan.nextInt() - 1;
-
-			}
-			count--;
+		player[0] = new Player(0, true)
+		for (int i = 1; i < numOfPlayers; i++) {
+			players[i] = new Player(i, false);
 		}
-		return false;
 	}
 
-	public boolean makeAValidMoveForComp(Token[] token, int diceNumber) {
-		int tokenId;
-		Random rand = new Random();
-
-		tokenId = rand.nextInt(4);
-
-		int[] visited = new int[4];
-		for (int i = 0; i < 4; i++) {
-			visited[i] = 0;
+	public void checkHit(int position) {
+		int playerAtPos = getterCommonBoard(position);
+		if (playerAtPos != -1) {
+			players[playerAtPos].resetTokenAtPos(position);
 		}
-
-		int count = 4;
-		while (count > 0) {
-			if (visited[tokenId] != 1) {
-				if (token[tokenId].canMove(diceNumber)) {
-					token[tokenId].moveToken(diceNumber);
-					checkHit(token, tokenId);
-					return true;
-				} else {
-					visited[tokenId] = 1;
-					tokenId = rand.nextInt(4);
-				}
-			}
-
-			else {
-				count++;
-
-				tokenId = rand.nextInt(4);
-
-			}
-			count--;
-		}
-		return false;
 	}
 
 	public static void main(String[] arg) {
@@ -149,17 +53,20 @@ public class Ludo {
 							} else {
 								if (!(ludo.makeAValidMoveForHuman(tokens,
 										diceNumber))) {
-									System.out.println(" No Move Possible : Next Player's chance! ");
+									System.out
+											.println(" No Move Possible : Next Player's chance! ");
 								}
 							}
 						} else {
 							if (!(ludo.makeAValidMoveForHuman(tokens,
 									diceNumber))) {
-								System.out.println(" No Move Possible : Next Player's chance! ");
+								System.out
+										.println(" No Move Possible : Next Player's chance! ");
 							}
 						}
 					} else {
-						System.out.println(" Computer Dice Value: " + diceNumber);
+						System.out.println(" Computer Dice Value: "
+								+ diceNumber);
 
 						if (diceNumber == 6) {
 							ludo.unlockAToken(players[turn]);
@@ -168,7 +75,8 @@ public class Ludo {
 						else {
 							if (!(ludo
 									.makeAValidMoveForComp(tokens, diceNumber))) {
-								System.out.println(" No Move Possible : Next Player's chance! ");
+								System.out
+										.println(" No Move Possible : Next Player's chance! ");
 							} else {
 								ludo.getBoard().display();
 							}
