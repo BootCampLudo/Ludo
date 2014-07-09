@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Player {
 
 	private int id;
-	private boolean isUnfinished;
+	private boolean unfinished;
 	private Token[] tokens;
 	private boolean isHuman;
 
@@ -17,7 +17,7 @@ public class Player {
 
 		}
 
-		this.isUnfinished = true;
+		this.unfinished = true;
 		this.isHuman = isHuman;
 	}
 
@@ -26,7 +26,7 @@ public class Player {
 	}
 
 	public boolean isUnfinished() {
-		return isUnfinished;
+		return unfinished;
 	}
 
 	public int getId() {
@@ -54,7 +54,7 @@ public class Player {
 
 		}
 		if (countTokensFinished != 4) {
-			isUnfinished = false;
+			unfinished = false;
 		}
 	}
 
@@ -122,15 +122,17 @@ public class Player {
 
 			System.out.println("Enter the tokenId to be moved: (1/2/3/4)");
 			id = scan.nextInt() - 1;
-			System.out.println(" Want to unlock a token? (y/n):  ");
-			choice = scan.next();
 		} else {
 			id = rand.nextInt(4);
 		}
-		if (diceNumber == 6 && choice.equals("y")) {
-			int tokenId = findLockedToken();
-			unlockToken(tokenId);
-			return this.id * 13;
+		if (diceNumber == 6 ) {
+			System.out.println(" Want to unlock a token? (y/n):  ");
+			choice = scan.next();
+			if(choice.equal("y")){
+				int tokenId = findLockedToken();
+				unlockToken(tokenId);
+				return this.id * 13;
+			}
 		}
 		int[] visited = new int[4];
 		for (int i = 0; i < 4; i++) {
@@ -149,8 +151,7 @@ public class Player {
 				id = rand.nextInt(4);
 				if (this.isHuman) {
 					System.out.println(" Invalid Move! Try Again ");
-					System.out
-							.println("Enter the tokenId to be moved: (1/2/3/4)          ");
+					System.out.println("Enter the tokenId to be moved: (1/2/3/4)          ");
 					id = scan.nextInt() - 1;
 				}
 
