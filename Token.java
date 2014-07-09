@@ -6,7 +6,7 @@ public class Token {
 	public Token(int playerId) {
 		
 		this.playerId = playerId;
-		this.position = playerId * 12;
+		this.position = playerId * 13;
 		this.isfree = false ;
 		this.iscomplete = false;
 		
@@ -17,7 +17,7 @@ public class Token {
 	
 	public void reset(){
 		
-		coordinate = playerId * 12;
+		position = playerId * 13;
 		isfree = false;
 		
 	}
