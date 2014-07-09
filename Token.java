@@ -1,6 +1,6 @@
 public class Token {
 	private boolean isfree;
-	private int iscomplete;
+	private boolean iscomplete;
 	private int position;
 	private int playerId;
 	public Token(int playerId) {
@@ -39,5 +39,7 @@ public class Token {
 	public int isfree() {
 		return isfree;
 	}
-	
+	public boolean isComplete(){
+		return iscomplete;
+	}
 }
