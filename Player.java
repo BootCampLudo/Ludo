@@ -10,6 +10,13 @@ public class Player {
 	public Player(int id,boolean isHuman) {
 		this.id = id;
 		this.tokens = new Token[4] ;
+		for (int i = 0; i < 4; i++) {
+
+			tokens[i] = new Token(id);
+
+			}
+
+
 		this.isUnfinished = true;
 		this.isHuman=isHuman;
 	}
@@ -85,21 +92,24 @@ public class Player {
 	}
 	public boolean checkClash(int steps, int id){
 		int[] positions = allTokenPos();
+		int[] StepsMovedPlayers = new int[4];
 		for(int i = 0; i < 4; i++){
-			if(id == i){
-				continue;
+			StepsMovedPlayers[i] = totalSteps(i);
+		}
+		for(int j = 0; j < 4; j++){
+			if((StepsMovedPlayers[id] + steps) == StepsMovedPlayer[i]){
+				return true;
 			}
-			else if((token[id] + steps) == token[i].getPosition)
-					return true;
-			}
+		}
 		return false;
 	}
+	public int totalSteps(int id){
+		return ((token[id].getposition() - (id*13) % 56);
+	}
 	public boolean canMove(int steps,int id) {
-		int[] positions = allTokenPos();
-		if((postions[id] + steps) % 60 < startingpos ){
-			return !checkClash(steps, id);
-			
-		}
 		
+		
+			return (!checkClash(steps, id) && tokens[id].isfree());
+			
 	}
 }
