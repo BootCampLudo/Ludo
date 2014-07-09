@@ -117,12 +117,20 @@ public class Player {
 		int id;
 		Random rand = new Random();
 		Scanner scan = new Scanner(System.in);
+		String choice = "y";
 		if (this.isHuman) {
 
 			System.out.println("Enter the tokenId to be moved: (1/2/3/4)");
 			id = scan.nextInt() - 1;
+			System.out.println(" Want to unlock a token? (y/n):  ");
+			choice = scan.next();
 		} else {
 			id = rand.nextInt(4);
+		}
+		if (diceNumber == 6 && choice.equals("y")) {
+			int tokenId = findLockedToken();
+			unlockToken(tokenId);
+			return this.id * 13;
 		}
 		int[] visited = new int[4];
 		for (int i = 0; i < 4; i++) {
