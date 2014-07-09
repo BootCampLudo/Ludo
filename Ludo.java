@@ -15,7 +15,7 @@ public class Ludo {
 	}
 
 	public void checkHit(int position) {
-		int playerAtPos = getterCommonBoard(position);
+		int playerAtPos = getPlayerAtPosCommonBoard(position);
 		if (playerAtPos != -1) {
 			players[playerAtPos].resetTokenAtPos(position);
 		}
@@ -36,10 +36,10 @@ public class Ludo {
 				if (pos != -1) {
 					if (pos < offset - 1) {
 						checkHit(pos);
-						board.setterCommonBoard(turn, pos);
+						board.putPlayerCommonBoard(turn, pos);
 					}
 					else {
-						board.setterHomeBoard(turn, pos - (offset - 1));
+						board.putPlayerHomeBoard(turn, pos - (offset - 1));
 					}
 				}
 				else {
