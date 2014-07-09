@@ -24,78 +24,34 @@ public class Ludo {
 	public static void main(String[] arg) {
 		int turn = 0;
 
-		String choice;
-		System.out.println("Enter the number of Players");
-		Scanner scan = new Scanner(System.in);
-		int numOfPlayers = scan.nextInt();
+		int numOfPlayers = 4;
 		Ludo ludo = new Ludo(numOfPlayers);
-		Player players[] = ludo.getBoard().getPlayers();
-		int unfinishedPlayers = ludo.getBoard().playersUnfinished().length;
-		while (players[GAME_CONFIG.HUMAN_ID].isUnfinished()
+		int unfinishedPlayers = numOfPlayers;
+		while (players[0].isUnfinished()
 				&& unfinishedPlayers > 1) {
 			turn = turn % numOfPlayers;
 
 			if (players[turn].isUnfinished()) {
-				System.out.println("Player " + (turn + 1) + " : ");
-				int diceNumber = ludo.rollDice();
-				if (players[turn].canMove(diceNumber)) {
-					Token tokens[] = players[turn].getTokens();
-
-					if (players[turn].getId() == GAME_CONFIG.HUMAN_ID) {
-						ludo.getBoard().display();
-						System.out.println(" Dice Value: " + diceNumber);
-						if (diceNumber == 6) {
-							System.out
-									.println(" Want to unlock a token? (y/n):  ");
-							choice = scan.next();
-							if (choice.equals("y")) {
-								ludo.unlockAToken(players[turn]);
-							} else {
-								if (!(ludo.makeAValidMoveForHuman(tokens,
-										diceNumber))) {
-									System.out
-											.println(" No Move Possible : Next Player's chance! ");
-								}
-							}
-						} else {
-							if (!(ludo.makeAValidMoveForHuman(tokens,
-									diceNumber))) {
-								System.out
-										.println(" No Move Possible : Next Player's chance! ");
-							}
-						}
-					} else {
-						System.out.println(" Computer Dice Value: "
-								+ diceNumber);
-
-						if (diceNumber == 6) {
-							ludo.unlockAToken(players[turn]);
-						}
-
-						else {
-							if (!(ludo
-									.makeAValidMoveForComp(tokens, diceNumber))) {
-								System.out
-										.println(" No Move Possible : Next Player's chance! ");
-							} else {
-								ludo.getBoard().display();
-							}
-
-						}
+				int pos = player.move();
+				if (pos != -1) {
+					if (pos < offset - 1) {
+						checkHit(pos);
+						board.setterCommonBoard(turn, pos);
 					}
-
-				} else {
-					System.out.println(" Dice Value: " + diceNumber);
-					System.out.println("No Move Possible");
+					else {
+						board.setterHomeBoard(turn, pos - (offset - 1));
+					}
+				}
+				else {
+					System.out.println("Move not possible. Next player"); //Move not possible
+				}
+				if (!players[turn].isUnfinished()) {
+					unfinishedPlayers--;
 				}
 			}
-
-			players[turn].updateIsUnfinished();
 			turn++;
-
-			unfinishedPlayers = ludo.getBoard().playersUnfinished().length;
 		}
-		if (players[GAME_CONFIG.HUMAN_ID].isUnfinished()) {
+		if (players[0].isUnfinished()) {
 			System.out.println("You Lost !!");
 		} else {
 			System.out.println("You Win !!");
