@@ -15,20 +15,20 @@ public class Board {
 
 	}
 
-	public void setterCommonBoard(int playerid, int index) {
-		this.commonBoard[index] = playerid;
+	public void putPlayerCommonBoard(int playerid, int pos) {
+		this.commonBoard[pos] = playerid;
 	}
 
-	public void setterHomeBoard(int playerid, int index) {
-		this.homeBoard[playerid][index] = playerid;
+	public void putPlayerHomeBoard(int playerid, int pos) {
+		this.homeBoard[playerid][pos] = playerid;
 	}
 
-	public int getterCommonBoard(int index) {
-		return this.commonBoard[index];
+	public int PlayerAtPosCommonBoard(int pos) {
+		return this.commonBoard[pos];
 	}
 
-	public int getterHomeBoard(int playerid, int index) {
-		return this.homeBoard[playerid][index];
+	public int PlayerAtPosHomeBoard(int playerid, int pos) {
+		return this.homeBoard[playerid][pos];
 	}
 
 }
