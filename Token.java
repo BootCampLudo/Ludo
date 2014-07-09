@@ -36,7 +36,7 @@ public class Token {
 	public int getPosition() {
 		return position;
 	}
-	public int isfree() {
+	public boolean isfree() {
 		return isfree;
 	}
 	public boolean isComplete(){
