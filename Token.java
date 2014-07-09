@@ -1,5 +1,5 @@
 public class Token {
-	private boolean isfree;
+	private boolean free;
 	private boolean iscomplete;
 	private int position;
 	private int playerId;
@@ -7,7 +7,7 @@ public class Token {
 		
 		this.playerId = playerId;
 		this.position = playerId * 13;
-		this.isfree = false ;
+		this.free = false ;
 		this.iscomplete = false;
 		
 	}
@@ -18,7 +18,7 @@ public class Token {
 	public void reset(){
 		
 		position = playerId * 13;
-		isfree = false;
+		free = false;
 		
 	}
 	public void moveToken(int steps) {
@@ -27,17 +27,17 @@ public class Token {
 		
 	}
 	
-	public void free() {
-		this.isfree = true;
+	public void Free() {
+		this.free = true;
 	}
 	public int getplayerId() {
-		return this.playerid;
+		return this.playerId;
 	}
 	public int getPosition() {
 		return position;
 	}
-	public boolean isfree() {
-		return isfree;
+	public boolean isFree() {
+		return free;
 	}
 	public boolean isComplete(){
 		return iscomplete;
